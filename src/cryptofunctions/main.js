@@ -1,32 +1,33 @@
 const CoinbasePro = require('coinbase-pro');
 
-const key = '6b6958989ac091adba1759c4ae78cabf';
-const secret =
-  '/exP/qbbQj5YYbGEJlxc/O3IXmeQB6VtnSJljUCNu4GbETJr/idnQY/QKeF4pnUso85gc5tuAzxNr9NIBozwgA==';
-const passphrase = '4q1l2n2cyct';
+// const key = '6b6958989ac091adba1759c4ae78cabf';
+// const secret =
+//   '/exP/qbbQj5YYbGEJlxc/O3IXmeQB6VtnSJljUCNu4GbETJr/idnQY/QKeF4pnUso85gc5tuAzxNr9NIBozwgA==';
+// const passphrase = '4q1l2n2cyct';
 
-const apiURI = 'https://api.pro.coinbase.com';
+// const apiURI = 'https://api.pro.coinbase.com';
 // const sandboxURI = 'https://api-public.sandbox.pro.coinbase.com';
 
-const authedClient = new CoinbasePro.AuthenticatedClient(
-  key,
-  secret,
-  passphrase,
-  apiURI
-);
+const publicClient = new CoinbasePro.PublicClient();
+// const authedClient = new CoinbasePro.AuthenticatedClient(
+//   key,
+//   secret,
+//   passphrase,
+//   apiURI
+// );
 
-async function getProducts() {
+export async function getProducts() {
   try {
-    const products = await authedClient.getProducts();
+    const products = await publicClient.getProducts();
     console.log(products);
   } catch (error) {
     console.error(error);
   }
 }
 
-async function getProductOrderBook() {
+export async function getProductOrderBook() {
   try {
-    const productOrderBook = await authedClient.getProductOrderBook('XRP-USD', {
+    const productOrderBook = await publicClient.getProductOrderBook('XRP-USD', {
       level: 1,
     });
     console.log(productOrderBook);
@@ -35,4 +36,4 @@ async function getProductOrderBook() {
   }
 }
 
-getProducts();
+// export let productsArray = getProducts();
