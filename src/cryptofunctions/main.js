@@ -28,7 +28,7 @@ export async function getProducts() {
 export async function getProductOrderBook() {
   try {
     const productOrderBook = await publicClient.getProductOrderBook('XRP-USD', {
-      level: 1,
+      level: 2,
     });
     console.log(productOrderBook);
   } catch (error) {
@@ -36,4 +36,20 @@ export async function getProductOrderBook() {
   }
 }
 
-// export let productsArray = getProducts();
+export async function getProductTrades() {
+  try {
+    const productTrades = await publicClient.getProductTrades('XRP-USD');
+    console.log(productTrades);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getTime() {
+  try {
+    const time = await publicClient.getTime();
+    console.log(time);
+  } catch (error) {
+    console.error(error);
+  }
+}
