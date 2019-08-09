@@ -9,14 +9,26 @@ import Chart from './components/chart';
 //   getTime,
 //   getProductTradeStream,
 // './server/main';
+import Styled from 'styled-components';
+// import { tradebook } from './server/dbVars';
+
+const GraphContainer = Styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+// let tradebookPrices = tradebook.map(price => {
+//   return Number(price.price);
+// });
 
 function App() {
-  // console.log(getProductOrderBook());
+  // console.log(tradebookPrices);
   return (
     <div className="App">
-      <header className="App-header">
+      <h1>Crypto Trade Tests</h1>
+      <GraphContainer>
         <Chart />
-      </header>
+      </GraphContainer>
     </div>
   );
 }
