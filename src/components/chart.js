@@ -12,23 +12,46 @@ export default class MyChart extends React.Component {
   constructor() {
     super();
 
-    this.state = {};
+    this.addData = this.addData.bind(this);
+  }
+
+  // addData() {
+  //   for (let i = 0; i < tradebookNumbers.length; i++) {
+  //     setTimeout(() => {
+  //       this.liteChart.data.labels.push(tradebookNumbers[i]);
+  //       this.liteChart.data.datasets[0].data.push(tradebookNumbers[i]);
+  //       this.liteChart.update();
+  //     }, 5000);
+  //   }
+  // }
+
+  addData(counter) {
+    counter = counter || 0;
+    if (counter < tradebookNumbers.length) {
+      setTimeout(() => {
+        this.liteChart.data.labels.push(tradebookNumbers[counter]);
+        this.liteChart.data.datasets[0].data.push(tradebookNumbers[counter]);
+        counter++;
+        this.liteChart.update();
+        this.addData(counter);
+      }, 100);
+    }
   }
 
   componentDidMount() {
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var chart = new Chart(ctx, {
+    this.ctx = document.getElementById('myChart').getContext('2d');
+    this.liteChart = new Chart(this.ctx, {
       // The type of chart we want to create
       type: 'line',
 
       // The data for our dataset
       data: {
-        labels: tradebookNumbers,
+        labels: [],
         datasets: [
           {
             label: 'Price',
             borderColor: 'rgb(99, 132, 255)',
-            data: [...tradebookNumbers],
+            data: [],
           },
         ],
       },
@@ -71,6 +94,7 @@ export default class MyChart extends React.Component {
   render() {
     return (
       <GraphContainer>
+        <button onClick={() => this.addData(0)}>Start Sim</button>
         <canvas id="myChart" width="1000" height="600" />
       </GraphContainer>
     );
