@@ -5,7 +5,7 @@ const publicClient = new CoinbasePro.PublicClient();
 export async function getProducts() {
   try {
     const products = await publicClient.getProducts();
-    console.log(products);
+    console.log('inside getProducts', products);
   } catch (error) {
     console.error(error);
   }
@@ -22,16 +22,16 @@ export async function getProductOrderBook() {
   }
 }
 
-export async function getProductTrades() {
+export const getProductTrades = async () => {
   try {
-    const productTrades = await publicClient.getProductTrades('LTC-USD', {
-      after: 41172823,
-    });
-    console.log(productTrades);
+    const productTrades = await publicClient.getProductTrades('LTC-USD');
+    this.setState = {
+      tradeBookNumbers: productTrades,
+    };
   } catch (error) {
     console.error(error);
   }
-}
+};
 
 export async function getTime() {
   try {

@@ -6,36 +6,46 @@ import { tradebookNumbers } from '../server/dbVars';
 const GraphContainer = Styled.div`
   display: flex;
   justify-content: wrap;
+  flex-direction: column;
+`;
+
+const GraphButtons = Styled.div`
+  display: flex;
+  justify-content: space-around;
 `;
 
 export default class MyChart extends React.Component {
   constructor() {
     super();
 
+    this.state = {
+      currentPurchase: '',
+      runSim: true,
+    };
+
     this.addData = this.addData.bind(this);
+    this.stopSim = this.stopSim.bind(this);
   }
 
-  // addData() {
-  //   for (let i = 0; i < tradebookNumbers.length; i++) {
-  //     setTimeout(() => {
-  //       this.liteChart.data.labels.push(tradebookNumbers[i]);
-  //       this.liteChart.data.datasets[0].data.push(tradebookNumbers[i]);
-  //       this.liteChart.update();
-  //     }, 5000);
-  //   }
-  // }
-
   addData(counter) {
-    counter = counter || 0;
-    if (counter < tradebookNumbers.length) {
+    if (tradebookNumbers.length && this.state.runSim) {
       setTimeout(() => {
-        this.liteChart.data.labels.push(tradebookNumbers[counter]);
-        this.liteChart.data.datasets[0].data.push(tradebookNumbers[counter]);
-        counter++;
+        this.liteChart.data.labels.push(tradebookNumbers.shift());
+        this.liteChart.data.datasets[0].data.push(tradebookNumbers.shift());
         this.liteChart.update();
         this.addData(counter);
-      }, 100);
+      }, 1000);
+    } else if (!this.state.runSim) {
+      this.setState({
+        runSim: true,
+      });
     }
+  }
+
+  stopSim() {
+    this.setState({
+      runSim: false,
+    });
   }
 
   componentDidMount() {
@@ -94,8 +104,11 @@ export default class MyChart extends React.Component {
   render() {
     return (
       <GraphContainer>
-        <button onClick={() => this.addData(0)}>Start Sim</button>
         <canvas id="myChart" width="1000" height="600" />
+        <GraphButtons>
+          <button onClick={() => this.addData(0)}>Start Sim</button>
+          <button onClick={() => this.stopSim()}>Stop Sim</button>
+        </GraphButtons>
       </GraphContainer>
     );
   }

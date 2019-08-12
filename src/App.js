@@ -22,7 +22,6 @@ const GraphContainer = Styled.div`
 // });
 
 function App() {
-  // console.log(tradebookPrices);
   return (
     <div className="App">
       <h1>Crypto Trade Tests</h1>
